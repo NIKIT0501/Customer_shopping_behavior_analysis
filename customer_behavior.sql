@@ -1,15 +1,13 @@
 --Find the previous month's revenue for each city.
-
-
 select *,
 lag(revenue) over (partition by city order by month) as previous_revenue 
-from monthly_rvenue
+from monthly_revenue
 
 --"Calculate month-over-month (MoM) order growth."
 with cte as (select month,orders, 
 Lag(orders) over (order by month ) as previous_orders
 from monthly_data)
-select month , orders,previous_order,
+select month ,orders, previous_orders,
 orders-previous_orders as growth 
 from monthly_data
 --We want to identify whether orders increased or decreased next month.
